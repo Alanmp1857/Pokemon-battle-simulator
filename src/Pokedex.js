@@ -6,14 +6,29 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TablePagination from "@mui/material/TablePagination";
 import { rows, columns } from "./Data.js";
 
-function Pokedex() {
+function Pokedex(props) {
   // console.log(rows)
+  const sPokemon = props.sPokemon;
+  const [num, setNum] = useState(50);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setNum(Math.min(num + 50, 396));
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   return (
     <div className="h-full">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 605 }}>
+        <TableContainer sx={{ maxHeight: 550 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -33,8 +48,15 @@ function Pokedex() {
                 // console.log(row[358])
                 const name = rows[ind][2];
                 return (
-                  ind < 50 && (
-                    <TableRow>
+                  ind < num && (
+                    <TableRow
+                      key={ind}
+                      onClick={() =>
+                        sPokemon((oldArr) =>
+                          oldArr.length < 6 ? [...oldArr, row] : oldArr
+                        )
+                      }
+                    >
                       {columns.map((column, index) => (
                         <TableCell
                           key={column.id}
@@ -58,6 +80,15 @@ function Pokedex() {
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 50]}
+          component="div"
+          count={rows.slice(0, 399).length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
     </div>
   );

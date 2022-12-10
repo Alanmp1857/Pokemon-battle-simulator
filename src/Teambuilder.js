@@ -7,6 +7,7 @@ import Data, { types } from "./Data";
 import axios from "axios";
 import mew from "./images/mew.png";
 import { rows } from "./Data.js";
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 
 const tryRequire = (path) => {
   try {
@@ -21,6 +22,7 @@ function Teambuilder() {
   const [selectedPokemon, setSelectedPokemon] = useState([]);
   const [teamPokemon, setTeamPokemon] = useState("");
   const [pokemons, setPokemons] = useState([]);
+  const [style, setStyle] = useState("hidden");
 
   useEffect(() => {
     const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
@@ -71,40 +73,95 @@ function Teambuilder() {
     // })
   }, [pokemons]);
 
+  const handleDelete = (index) => {
+    setSelectedPokemon(selectedPokemon.filter((pok, ind) => index != ind));
+  };
+
   return (
-    <div className="h-full bg-green-400">
-      <div className="h-full p-4 ">
+    <div className="h-full bg-slate-400">
+      <div className="h-full p-4">
         <Data />
-        <Button
-          onClick={() => setClicked(!clicked)}
-          variant="contained"
-          color="primary"
-        >
-          Add Team
-        </Button>
-        <div className="bg-blue-400 h-full w-full flex">
+        <div>
+          <Button
+            onClick={() => setClicked(!clicked)}
+            variant="contained"
+            color="primary"
+          >
+            Add Team
+          </Button>
+        </div>
+        <div className="bg-blue-900 h-full w-full flex">
           <div className="h-full bg-orange-600 w-3/4">
-            {clicked && <Pokedex />}
+            {clicked && <Pokedex sPokemon={setSelectedPokemon} />}
           </div>
-          {/* <div className='w-1/4 bg-gradient-to-r from-orange-500 to-red-500 h-full'>
-            <div className='w-full h-12 bg-yellow-400 flex'>
-              {
-                selectedPokemon.map(pokemon => {
-                  return <img onClick={()=>setTeamPokemon(pokemon)} className='scale-125' src={require(`./images/${pokemon.toLowerCase()}.png`)} />
-                })
-              }
+          <div className="w-1/4 rounded bg-gradient-to-r from-blue-500 to-green-400 h-full">
+            <div className="w-full h-14 flex justify-center ">
+              {selectedPokemon.map((pokemon, index) => {
+                return (
+                  <div
+                    onMouseEnter={() =>
+                      setStyle("pokemon scale-75 absolute top-0 right-0")
+                    }
+                    onMouseLeave={() => setStyle("hidden")}
+                    className="h-full w-1/6 border border-slate-900 flex relative cursor-pointer"
+                  >
+                    <div className="h-full w-full">
+                      <img
+                        onClick={() => setTeamPokemon(pokemon)}
+                        src={require(`./images/${pokemon[2].toLowerCase()}.png`)}
+                      />
+                    </div>
+                    <div onClick={() => handleDelete(index)} className={style}>
+                      <DeleteTwoToneIcon className="" />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            {teamPokemon && <h2 className='w-full text-center'>{teamPokemon}</h2>}
-            <div className='w-full h-1/4 flex justify-center'>
-              {teamPokemon && <img className='scale-[1.5]' src={require(`./images/${teamPokemon}.png`)} />}
+            {teamPokemon && (
+              <h2 className="w-full text-center">{teamPokemon[2]}</h2>
+            )}
+            <div className="w-full h-1/4 flex justify-center">
+              {teamPokemon && (
+                <img
+                  className="scale-[1.5]"
+                  src={require(`./images/${teamPokemon[2]}.png`)}
+                />
+              )}
             </div>
-            <div className='w-full'>
-              <div className='h-6 m-4 w-12 text-center border-black border-2 rounded bg-green-400'>Blaze</div>
-            </div>
-            <div className='w-full flex justify-center'> 
+            {
+              <div className="w-full flex justify-center ">
+                <div className="w-full flex justify-center flex-start ">
+                  {teamPokemon &&
+                    teamPokemon[3].split(" | ").map((typs) => {
+                      return (
+                        <div
+                          className={`h-6  text-xs my-4 flex items-center p-2 text-center border-black border-2 rounded bg-[${types[typs]}]`}
+                        >
+                          {typs}
+                        </div>
+                      );
+                    })}
+                </div>
+                <div className="w-full flex justify-center flex-end">
+                  {teamPokemon &&
+                    teamPokemon[4].split(" | ").map((typs, index) => {
+                      return (
+                        (teamPokemon[4].split(" | ").length < 3 ||
+                          index != 1) && (
+                          <div className="h-6 truncate text-xs my-4 flex items-center p-2 text-center border-black border-2 rounded bg-green-400">
+                            {typs}
+                          </div>
+                        )
+                      );
+                    })}
+                </div>
+              </div>
+            }
+            <div className="w-full flex justify-center">
               {teamPokemon && <Stats selectedPokemon={teamPokemon} />}
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
