@@ -9,6 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import { columns, rows } from "./Data.js";
 
+// const tryRequire = (path) => {
+//     try {
+//       return [require(path),path];
+//     } catch (err) {
+//       return [require("./images/mew.png"),"./images/mew.png"];
+//     }
+//   };
 function Pokedex(props) {
   // console.log(rows)
   const sPokemon = props.sPokemon;
@@ -17,7 +24,7 @@ function Pokedex(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
-    setNum(Math.min(num + 50, 396));
+    setNum(Math.min(num + 50, 900));
     setPage(newPage);
   };
 
@@ -65,7 +72,7 @@ function Pokedex(props) {
                         >
                           {index == 1 ? (
                             <img
-                              className="h-8 scale-[2.5]"
+                              className="h-8 scale-[1.5]"
                               src={require(`./images/${name}.png`)}
                             ></img>
                           ) : (

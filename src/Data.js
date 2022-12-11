@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import mew from "./images/mew.png";
+// import mew from "./images/mew.png";
 
 const tableArr = ["name", "types", "abilities"];
 const baseUrl = "http://localhost:8000/pokemon/";
@@ -58,9 +58,9 @@ function Data(props) {
         return rows;
       })
       .then((rows) => {
-        rows = rows.slice(0, 400);
+        rows = rows.slice(0, 906);
         rrows = [...rows];
-        console.log("rows", rows);
+        // console.log("rows",rows);
       });
   }, []);
 
@@ -69,7 +69,8 @@ function Data(props) {
     rows = [
       ...rrows.filter((x) => {
         return (
-          x[2].substring(0, Math.min(x[2].length, search.length)) === search
+          x[2].substring(0, Math.min(x[2].length, search.length)) == search ||
+          x[3].split(" | ").includes(search)
         );
       }),
     ];

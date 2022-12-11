@@ -2,23 +2,23 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Pokedex from "./Pokedex";
 import Stats from "./Stats";
-import charmander from "./images/charmander.png";
+// import charmander from "./images/charmander.png";
 import Data, { types } from "./Data";
 import axios from "axios";
-import mew from "./images/mew.png";
+// import mew from "./images/mew.png";
 import { rows } from "./Data.js";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import TextField from "@mui/material/TextField";
 
 const baseUrl = "http://localhost:8000/pokemon/";
 
-const tryRequire = (path) => {
-  try {
-    return [require(`${path}`), path];
-  } catch (err) {
-    return [require("./images/mew.png"), "./images/mew.png"];
-  }
-};
+// const tryRequire = (path) => {
+//   try {
+//     return [require(`${path}`), path];
+//   } catch (err) {
+//     return [require("./images/mew.png"), "./images/mew.png"];
+//   }
+// };
 
 function Teambuilder() {
   const [clicked, setClicked] = useState(false);
@@ -36,45 +36,44 @@ function Teambuilder() {
   }, []);
 
   useEffect(() => {
-    // if (pokemons.length == 0) {
-    //   return;
-    // }
     // const urls = [];
-    // for (let i = 364; i < 400;i++) {
-    //   // console.log(pokemons[i], i)
-    //   urls.push(pokemons[i].url)
-    // }
-    // axios.all(urls.map((url) => axios.get(url))).then((res) => {
-    //   // console.log("res", res)
-    //   for (let i = 0; i < res.length; i++){
-    //     const data = res[i].data;
-    //     let obj = {}
-    //     obj["id"] = i+364;
-    //     const rPath = `./images/${data.name.toLowerCase()}.png`;
-    //     obj["imageUrl"] = tryRequire(rPath)[1];
-    //     obj["name"] = data.name;
-    //     let arr = [];
-    //     for (let x of data["types"]) {
-    //       arr.push(x.type.name)
-    //     }
-    //     obj["types"] = arr;
-    //     arr = [];
-    //     for (let x of data["abilities"]) {
-    //       arr.push(x.ability.name)
-    //     }
-    //     obj["abilities"] = arr;
-    //     arr = [];
-    //     let sum = 0;
-    //     for (let x of data['stats']) {
-    //       arr.push(x.base_stat);
-    //       sum += x.base_stat;
-    //     }
-    //     arr.push(sum);
-    //     obj["stats"] = arr;
-    //     console.log(obj);
-    //     axios.post('http://localhost:8000/pokemon/add', obj).then((resp) => console.log("data added ", obj.name, i));
+    // if(pokemons.length>0){
+    //   for (let i = 896; i < 897;i++) {
+    //     // console.log(pokemons[i], i)
+    //     urls.push(pokemons[i].url)
     //   }
-    // })
+    //   axios.all(urls.map((url) => axios.get(url))).then((res) => {
+    //     // console.log("res", res)
+    //     for (let i = 0; i < res.length; i++){
+    //       const data = res[i].data;
+    //       let obj = {}
+    //       obj["id"] = i+896;
+    //       const rPath = `./images/${data.name.toLowerCase()}.png`;
+    //       obj["imageUrl"] = tryRequire(rPath)[1];
+    //       obj["name"] = data.name;
+    //       let arr = [];
+    //       for (let x of data["types"]) {
+    //         arr.push(x.type.name)
+    //       }
+    //       obj["types"] = arr;
+    //       arr = [];
+    //       for (let x of data["abilities"]) {
+    //         arr.push(x.ability.name)
+    //       }
+    //       obj["abilities"] = arr;
+    //       arr = [];
+    //       let sum = 0;
+    //       for (let x of data['stats']) {
+    //         arr.push(x.base_stat);
+    //         sum += x.base_stat;
+    //       }
+    //       arr.push(sum);
+    //       obj["stats"] = arr;
+    //       console.log(obj);
+    //       axios.post('http://localhost:8000/pokemon/add', obj).then((resp) => console.log("data added ", obj.name, i));
+    //     }
+    //   })
+    // }
   }, [pokemons]);
 
   const handleDelete = (index) => {
