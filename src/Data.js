@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import mew from "./images/mew.png";
+import mew from "./images/mew.png";
 
 const tableArr = ["name", "types", "abilities"];
 const baseUrl = "http://localhost:8000/pokemon/";
@@ -27,7 +27,7 @@ function Data(props) {
     // if (rows.length > 0) return;
     rows = [];
     axios
-      .get(`http://localhost:8000/pokemon/`)
+      .get(`http://localhost:8000/pokemon/all`)
       .then((resp) => {
         resp.data.sort(compare);
         // console.log(data['types'],data["id"])

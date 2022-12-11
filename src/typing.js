@@ -72,3 +72,16 @@ const types = [
     color: "#F0B6BC",
   },
 ];
+
+// {
+//   "id": 0,
+//   "pokemon": ["charizard"],
+//   "name": "fire-blast",
+//   "power": 110,
+//   "accuracy": 90,
+//   "pp": 5,
+//   "effect_chance": 10%,
+//   "short_effect": "A blast of fire which obliterates the enemy and has a chance of burn",
+//   "damage_class" : "special",
+//   "type": "fire"
+// }
