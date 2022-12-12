@@ -10,6 +10,7 @@ import { rows } from "./Data.js";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import TextField from "@mui/material/TextField";
 import moves from "./movesdb";
+import MoveTable from "./MoveTable";
 
 const baseUrl = "http://localhost:8000/pokemon/";
 
@@ -141,6 +142,7 @@ function Teambuilder() {
         <div className="bg-blue-900 h-full w-full flex">
           <div className="h-full bg-orange-600 w-3/4">
             {clicked && <Pokedex sPokemon={setSelectedPokemon} />}
+            {teamPokemon && <MoveTable selectedPokemon={teamPokemon} />}
           </div>
           <div className="w-1/4 rounded bg-gradient-to-r from-blue-500 to-green-400 h-full">
             <div className="w-full h-14 flex justify-center ">

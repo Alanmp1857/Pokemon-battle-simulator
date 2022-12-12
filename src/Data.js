@@ -9,6 +9,7 @@ const baseUrl = "http://localhost:8000/pokemon/";
 
 let rows = [];
 let rrows = [];
+let mrows = [];
 
 function Data(props) {
   const { search, setSearch } = props;
@@ -22,6 +23,13 @@ function Data(props) {
     }
     return 0;
   }
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/moves/all`).then((resp) => {
+      mrows = resp.data;
+      // console.log(resp);
+    });
+  }, []);
 
   useEffect(() => {
     // if (rows.length > 0) return;
@@ -69,7 +77,7 @@ function Data(props) {
     rows = [
       ...rrows.filter((x) => {
         return (
-          x[2].substring(0, Math.min(x[2].length, search.length)) == search ||
+          x[2].substring(0, Math.min(x[2].length, search.length)) === search ||
           x[3].split(" | ").includes(search)
         );
       }),
@@ -176,4 +184,54 @@ const columns = [
   },
 ];
 
-export { rows, types, columns };
+const colMoves = [
+  {
+    id: 0,
+    label: "Name",
+    minWidth: 50,
+  },
+  {
+    id: 1,
+    label: "Type",
+    minWidth: 20,
+    align: "center",
+  },
+  {
+    id: 2,
+    label: "Category",
+    minWidth: 20,
+    align: "center",
+  },
+  {
+    id: 3,
+    label: "Power",
+    minWidth: 20,
+    align: "center",
+  },
+  {
+    id: 4,
+    label: "Accuracy",
+    minWidth: 20,
+    align: "center",
+  },
+  {
+    id: 5,
+    label: "PP",
+    minWidth: 20,
+    align: "center",
+  },
+  {
+    id: 6,
+    label: "Effect",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: 7,
+    label: "Prob",
+    minWidth: 20,
+    align: "center",
+  },
+];
+
+export { rows, types, columns, colMoves, mrows };
