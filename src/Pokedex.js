@@ -70,7 +70,7 @@ function Pokedex(props) {
                           align={column.align}
                           style={{ minWidth: column.minWidth }}
                         >
-                          {index == 1 ? (
+                          {index === 1 ? (
                             <img
                               className="h-8 scale-[1.5]"
                               src={require(`./images/${name}.png`)}
