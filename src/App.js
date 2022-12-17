@@ -12,6 +12,7 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Data from "./Data";
 import Battle from "./Battle";
+import Ladder from "./Ladder";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/teambuilder" exact element={<Teambuilder />} />
           <Route path="/battle" exact element={<Battle />} />
+          <Route path="/ladder" exact element={<Ladder />} />
         </Routes>
       </Router>
     </div>

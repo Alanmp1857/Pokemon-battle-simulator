@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import { columns, rows } from "./Data.js";
+import uuid from "react-uuid";
 
 // const tryRequire = (path) => {
 //     try {
@@ -60,7 +61,12 @@ function Pokedex(props) {
                       key={ind}
                       onClick={() =>
                         sPokemon((oldArr) =>
-                          oldArr.length < 6 ? [...oldArr, row] : oldArr
+                          oldArr.length < 6
+                            ? [
+                                ...oldArr,
+                                [uuid(), ...row.filter((pk, ind) => ind != 0)],
+                              ]
+                            : oldArr
                         )
                       }
                     >
@@ -70,7 +76,7 @@ function Pokedex(props) {
                           align={column.align}
                           style={{ minWidth: column.minWidth }}
                         >
-                          {index === 1 ? (
+                          {index == 1 ? (
                             <img
                               className="h-8 scale-[1.5]"
                               src={require(`./images/${name}.png`)}

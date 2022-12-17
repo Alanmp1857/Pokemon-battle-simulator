@@ -15,6 +15,16 @@ import { createTheme } from "@mui/material/styles";
 import { purple, red, green } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
+const baseUrl = "http://localhost:8000/pokemon/";
+
+const tryRequire = (path) => {
+  try {
+    return [require(`${path}`), path];
+  } catch (err) {
+    return [require("./images/mew.png"), "./images/mew.png"];
+  }
+};
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,16 +42,6 @@ const theme = createTheme({
   },
 });
 
-const baseUrl = "http://localhost:8000/pokemon/";
-
-const tryRequire = (path) => {
-  try {
-    return [require(`${path}`), path];
-  } catch (err) {
-    return [require("./images/mew.png"), "./images/mew.png"];
-  }
-};
-
 let selMoves = {};
 
 function Teambuilder() {
@@ -58,6 +58,11 @@ function Teambuilder() {
   const [move4, setMove4] = useState("");
   const [currPokemon, setCurrPokemon] = useState(teamPokemon[2]);
   const [currInput, setCurrInput] = useState(0);
+  const [abil1, setAbil1] = useState("scale-75 bg-slate-900 text-white");
+  const [abil2, setAbil2] = useState("scale-75 bg-slate-900 text-white");
+  const [abil3, setAbil3] = useState("scale-75 bg-slate-900 text-white");
+  const [choosenAbility, setChoosenAbility] = useState("");
+  const [validate, setValidate] = useState(false);
 
   useEffect(() => {
     const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
@@ -147,11 +152,13 @@ function Teambuilder() {
   // },[])
 
   useEffect(() => {
-    if (Object.keys(selMoves).includes(teamPokemon[2])) {
-      setMove1(selMoves[teamPokemon[2]][0]);
-      setMove2(selMoves[teamPokemon[2]][1]);
-      setMove3(selMoves[teamPokemon[2]][2]);
-      setMove4(selMoves[teamPokemon[2]][3]);
+    console.log("here", teamPokemon[0]);
+    if (Object.keys(selMoves).includes(teamPokemon[0])) {
+      setMove1(selMoves[teamPokemon[0]].moves[0]);
+      setMove2(selMoves[teamPokemon[0]].moves[1]);
+      setMove3(selMoves[teamPokemon[0]].moves[2]);
+      setMove4(selMoves[teamPokemon[0]].moves[3]);
+      setChoosenAbility(selMoves[teamPokemon[0]].ability);
     } else {
       setMove1("");
       setMove2("");
@@ -160,12 +167,34 @@ function Teambuilder() {
     }
   }, [teamPokemon]);
 
-  const color1 = purple.A300;
-
   const handleSave = () => {
-    selMoves[teamPokemon[2]] = [move1, move2, move3, move4];
-    alert("Saved successfully");
-    console.log(selMoves);
+    const mmoves = [move1, move2, move3, move4];
+
+    let ok = false;
+    mmoves.map((mv, ind) => {
+      if (mv != "") {
+        ok = true;
+        return;
+      }
+    });
+    if (!ok) {
+      alert("please select atleast one move");
+    }
+    ok = ok & (choosenAbility != "");
+    if (!ok) {
+      alert("please select ability");
+    }
+    setValidate(ok);
+    if (validate) {
+      selMoves[teamPokemon[0]] = {
+        name: teamPokemon[2],
+        moves: mmoves,
+        ability: choosenAbility,
+      };
+      // selMoves["ability"]=choosenAbility
+      alert("Saved successfully");
+      console.log(selMoves);
+    }
   };
 
   return (
@@ -206,9 +235,11 @@ function Teambuilder() {
             </Link>
           </div>
           <div className="ml-2">
-            <Button variant="contained" color="primary">
-              Ladder
-            </Button>
+            <Link to="/ladder">
+              <Button variant="contained" color="primary">
+                Ladder
+              </Button>
+            </Link>
           </div>
           <div className="ml-2">
             <Button variant="contained" color="primary">
@@ -278,17 +309,45 @@ function Teambuilder() {
                     })}
                 </div>
                 <div className="w-full flex justify-center flex-end">
-                  {teamPokemon &&
-                    teamPokemon[4].split(" | ").map((typs, index) => {
-                      return (
-                        (teamPokemon[4].split(" | ").length < 3 ||
-                          index !== 1) && (
-                          <div className="h-6 truncate text-xs my-4 flex items-center p-2 text-center border-black border-2 rounded bg-white">
-                            {typs}
-                          </div>
-                        )
-                      );
-                    })}
+                  {teamPokemon && teamPokemon[4].split(" | ")[0] && (
+                    <div
+                      onClick={() => {
+                        setAbil1("bg-slate-100");
+                        setChoosenAbility(teamPokemon[4].split(" | ")[0]);
+                        setAbil2("scale-75 bg-slate-900 text-white");
+                        setAbil3("scale-75 bg-slate-900 text-white");
+                      }}
+                      className={`h-6 truncate text-xs my-4 flex items-center  text-center border-black border-2 rounded cursor-pointer ${abil1}`}
+                    >
+                      {teamPokemon[4].split(" | ")[0]}
+                    </div>
+                  )}
+                  {teamPokemon && teamPokemon[4].split(" | ")[1] && (
+                    <div
+                      onClick={() => {
+                        setAbil2("bg-slate-100");
+                        setChoosenAbility(teamPokemon[4].split(" | ")[1]);
+                        setAbil1("scale-75 bg-slate-900 text-white");
+                        setAbil3("scale-75 bg-slate-900 text-white");
+                      }}
+                      className={`h-6 truncate text-xs my-4 flex items-center  text-center border-black border-2 rounded cursor-pointer ${abil2}`}
+                    >
+                      {teamPokemon[4].split(" | ")[1]}
+                    </div>
+                  )}
+                  {teamPokemon && teamPokemon[4].split(" | ")[2] && (
+                    <div
+                      onClick={() => {
+                        setAbil3("bg-slate-100");
+                        setChoosenAbility(teamPokemon[4].split(" | ")[2]);
+                        setAbil2("scale-75 bg-slate-900 text-white");
+                        setAbil1("scale-75 bg-slate-900 text-white");
+                      }}
+                      className={`h-6 truncate text-xs my-4 flex items-center  text-center border-black border-2 rounded cursor-pointer ${abil3}`}
+                    >
+                      {teamPokemon[4].split(" | ")[2]}
+                    </div>
+                  )}
                 </div>
               </div>
             }

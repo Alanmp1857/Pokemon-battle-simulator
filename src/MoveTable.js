@@ -43,7 +43,7 @@ function MoveTable(props) {
     }
     if (vari[currInput].length > 0 && rows.length > 0) {
       console.log("currinp", vari);
-      if (mrows.length > 0 && vari[currInput] !== "") {
+      if (mrows.length > 0 && vari[currInput] != "") {
         setMrows(
           filterRows(rows, vari, currInput).filter((row) => {
             return row["Name"].toLowerCase().includes(vari[currInput]);
@@ -55,7 +55,7 @@ function MoveTable(props) {
 
   useEffect(() => {
     axios.get(`http://localhost:8000/moves/all`).then((resp) => {
-      console.log(teamPokemon[2]);
+      // console.log(teamPokemon[2])
       const data = resp.data.filter((res) =>
         res.Pokemon.includes(teamPokemon[2])
       );
@@ -77,7 +77,7 @@ function MoveTable(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  console.log("mrows", mrows);
+  // console.log("mrows",mrows)
   return (
     <div className="h-full">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -111,7 +111,8 @@ function MoveTable(props) {
                               cursor: "pointer",
                             }}
                             onClick={() => {
-                              func[currInput](row["Name"].toLowerCase());
+                              !vari.includes(row["Name"].toLowerCase()) &&
+                                func[currInput](row["Name"].toLowerCase());
                               setTrigger(!trigger);
                             }}
                           >
