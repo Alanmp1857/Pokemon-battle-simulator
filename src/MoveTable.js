@@ -38,12 +38,12 @@ function MoveTable(props) {
   }
 
   useEffect(() => {
-    if (vari[currInput].length == 0) {
+    if (vari[currInput].length === 0) {
       setMrows([...rows]);
     }
     if (vari[currInput].length > 0 && rows.length > 0) {
       console.log("currinp", vari);
-      if (mrows.length > 0 && vari[currInput] != "") {
+      if (mrows.length > 0 && vari[currInput] !== "") {
         setMrows(
           filterRows(rows, vari, currInput).filter((row) => {
             return row["Name"].toLowerCase().includes(vari[currInput]);

@@ -13,6 +13,7 @@ import Home from "./Home";
 import Data from "./Data";
 import Battle from "./Battle";
 import Ladder from "./Ladder";
+import DamageCalculator from "./DamageCalculator";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/teambuilder" exact element={<Teambuilder />} />
           <Route path="/battle" exact element={<Battle />} />
           <Route path="/ladder" exact element={<Ladder />} />
+          <Route path="/damageCalculator" exact element={<DamageCalculator />} />
         </Routes>
       </Router>
     </div>

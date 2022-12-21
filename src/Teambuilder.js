@@ -227,14 +227,18 @@ function Teambuilder() {
             </Link>
           </div>
           <div className="ml-2">
-            <Button variant="contained" color="primary">
-              Ladder
-            </Button>
+            <Link to="/ladder">
+              <Button variant="contained" color="primary">
+                Ladder
+              </Button>
+            </Link>
           </div>
           <div className="ml-2">
-            <Button variant="contained" color="primary">
-              Damage Calculator
-            </Button>
+            <Link to="/damageCalculator">
+              <Button variant="contained" color="primary">
+                Damage Calculator
+              </Button>
+            </Link>
           </div>
         </div>
         <div className='bg-blue-900 h-full w-full flex'>
