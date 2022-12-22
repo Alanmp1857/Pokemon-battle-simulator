@@ -225,21 +225,21 @@ const colMoves = [
   },
 ];
 
-let power = 100;
-let attk = 112;
-let SpAttk = 100;
-let def = 90;
-let SpDef = 100;
-let arr=[1, 1.5];
-let crit = arr[Math.floor(arr.length*Math.random())];
-let stab = 1.5;
-let type = 1;
-let hp = 105;
-let category="Physical";
+// let power = 100;
+// let attk = 112;
+// let SpAttk = 100;
+// let def = 90;
+// let SpDef = 100;
+// let arr=[1, 1.5];
+// let crit = arr[Math.floor(arr.length*Math.random())];
+// let stab = 1.5;
+// let type = 1;
+// let hp = 105;
+// let category="Physical";
 
-let formula1 = ((0.25 * power * (attk / def) * crit) * stab * type) * hp / 100;
-let formula2 = ((0.25 * power * (SpAttk / SpDef) * crit) * stab * type) * hp / 100;
-const move=(category==="Physical") ? formula1 : formula2;
+// let formula1 = ((0.25 * power * (attk / def) * crit) * stab * type) * hp / 100;
+// let formula2 = ((0.25 * power * (SpAttk / SpDef) * crit) * stab * type) * hp / 100;
+// const move=(category==="Physical") ? formula1 : formula2;
 // console.log(move);
 // console.log(crit);
 
