@@ -72,3 +72,19 @@ const types = [
     color: "#F0B6BC",
   },
 ];
+
+let power = 85;
+let attk = 112;
+let SpAttk = 109;
+let def = 90;
+let SpDef = 90;
+let arr=[1, 1.5];
+let crit = arr[Math.floor(arr.length*Math.random())];
+let stab = 1;
+let type = 2;
+let hp = 105;
+let category="Physical";
+let formula1,formula2;
+formula1 = ((0.25 * power * (attk / def) * crit) * stab * type) * hp;
+formula2 = ((0.25 * power * (SpAttk / SpDef) * crit) * stab * type) * hp/100;
+console.log(formula2)
