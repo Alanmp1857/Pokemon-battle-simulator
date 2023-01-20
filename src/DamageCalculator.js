@@ -24,21 +24,21 @@ function ShowHideDiv2() {
   spAttack.style.display = sp.checked ? "block" : "none";
 }
 
-let power = 110;
-let attk = 112;
-let SpAttk = 85;
+let power = 100;
+let attk = 84;
+let SpAttk = 120;
 let def = 90;
-let SpDef = 90;
+let SpDef = 120;
 let arr = [1, 1.5];
 let crit = arr[Math.floor(arr.length * Math.random())];
 let stab = 1.5;
 let type = 1;
-let hp = 105;
+let hp = 90;
 let category = "Physical";
 let formula1, formula2;
 formula1 = (0.25 * power * (attk / def) * crit * stab * type * hp) / 100;
 formula2 = (0.25 * power * (SpAttk / SpDef) * crit * stab * type * hp) / 100;
-console.log(formula2);
+// console.log(formula2);
 
 function calculate1(power, attk, def, crit, stab, type, hp) {
   return formula1;
@@ -47,7 +47,7 @@ function calculate2(power, SpAttk, SpDef, crit, stab, type, hp) {
   return formula2;
 }
 const move = category === "Physical" ? formula1 : formula2;
-// console.log(move);
+console.log(formula2);
 // console.log(crit);
 
 // function onlyUnique(arr) {
@@ -62,8 +62,9 @@ function DamageCalculator() {
   const [oppPokemonName, setOppPokemonName] = useState('')
   const [searchedOpp,setSearchedOpp] = useState(true)
   rrows = rows.slice(895)
-  console.log(rrows);
+  // console.log(rrows);
   useEffect(() => {
+    console.log(rrows)
   }, []);
   return (
     <div className="h-[90%] w-full flex">
@@ -86,7 +87,7 @@ function DamageCalculator() {
                 {
                     pokemonName.length>0 && (!searched) &&
                     <div className="border-black border mt-2 ml-2 w-3/4">
-                        {
+                    {
                       rrows.map(row => row[2].includes(pokemonName) && <div className="cursor-pointer hover:bg-blue-400" onClick={() => { setPokemonName(row[2]); setSearched(true)}}>{row[2]}</div>)                  
                         }
                     </div>          
