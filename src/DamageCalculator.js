@@ -4,7 +4,7 @@ import { rows } from "./Data";
 
 // const arr=["Pokemon Name", "Pokemon Type", "Opponent Pokemon Name", "Opponent Pokemon Type", "Opponent HP"]
 
-let rrows=[]
+let rrows = [];
 
 function ShowHideDiv1() {
   const phy = document.getElementById("physical");
@@ -29,8 +29,8 @@ let attk = 84;
 let SpAttk = 120;
 let def = 90;
 let SpDef = 120;
-let arr = [1, 1.5];
-let crit = arr[Math.floor(arr.length * Math.random())];
+let arr1 = [1, 1.5];
+let crit = arr1[Math.floor(arr1.length * Math.random())];
 let stab = 1.5;
 let type = 1;
 let hp = 90;
@@ -53,18 +53,141 @@ console.log(formula2);
 // function onlyUnique(arr) {
 //   let a = []
 //   let ans = []
-//   arr.map((x)=>) 
+//   arr.map((x)=>)
 // }
+
+let typeWeaknesses = {
+  normal: {
+    weakTo: [],
+    resists: ["rock", "steel"],
+    immuneTo: ["ghost"],
+  },
+  fire: {
+    weakTo: ["water", "rock", "dragon"],
+    resists: ["fire", "grass", "ice", "bug", "steel"],
+    immuneTo: [],
+  },
+  water: {
+    weakTo: ["grass", "electric"],
+    resists: ["fire", "water", "ice", "steel"],
+    immuneTo: [],
+  },
+  electric: {
+    weakTo: ["ground"],
+    resists: ["electric", "flying", "steel"],
+    immuneTo: [],
+  },
+  grass: {
+    weakTo: ["fire", "ice", "poison", "flying", "bug"],
+    resists: ["water", "electric", "grass", "ground"],
+    immuneTo: [],
+  },
+  ice: {
+    weakTo: ["fire", "fighting", "rock", "steel"],
+    resists: ["ice"],
+    immuneTo: [],
+  },
+  fighting: {
+    weakTo: ["flying", "psychic", "fairy"],
+    resists: ["rock", "bug", "dark"],
+    immuneTo: [],
+  },
+  poison: {
+    weakTo: ["ground", "psychic"],
+    resists: ["grass", "fighting", "poison", "bug", "fairy"],
+    immuneTo: [],
+  },
+  ground: {
+    weakTo: ["water", "grass", "ice"],
+    resists: ["poison", "rock"],
+    immuneTo: ["electric"],
+  },
+  flying: {
+    weakTo: ["rock", "electric", "ice"],
+    resists: ["grass", "fighting", "bug"],
+    immuneTo: [],
+  },
+  psychic: {
+    weakTo: ["bug", "ghost", "dark"],
+    resists: ["fighting", "psychic"],
+    immuneTo: [],
+  },
+  bug: {
+    weakTo: ["fire", "flying", "rock"],
+    resists: ["grass", "fighting", "ground"],
+    immuneTo: [],
+  },
+  rock: {
+    weakTo: ["water", "grass", "fighting", "ground", "steel"],
+    resists: ["normal", "fire", "poison", "flying"],
+    immuneTo: [],
+  },
+  ghost: {
+    weakTo: ["dark"],
+    resists: ["poison", "bug"],
+    immuneTo: ["normal", "fighting"],
+  },
+  dragon: {
+    weakTo: ["dragon", "ice", "fairy"],
+    resists: ["fire", "water", "electric", "grass"],
+    immuneTo: [],
+  },
+  dark: {
+    weakTo: ["fighting", "bug", "fairy"],
+    resists: ["ghost", "dark"],
+    immuneTo: ["psychic"],
+  },
+  steel: {
+    weakTo: ["fire", "fighting", "ground"],
+    resists: [
+      "normal",
+      "grass",
+      "ice",
+      "flying",
+      "psychic",
+      "bug",
+      "rock",
+      "dragon",
+      "steel",
+    ],
+    immuneTo: ["poison"],
+  },
+  fairy: {
+    weakTo: ["steel", "poison"],
+    resists: ["fighting", "bug", "dark"],
+    immuneTo: ["dragon"],
+  },
+};
+
+function calculateTypeEffectiveness(attackType, defenseType) {
+  let effectiveness = 1;
+  let attackTypeWeaknesses = typeWeaknesses[attackType].weakTo;
+  let defenseTypeResistances = typeWeaknesses[defenseType].resists;
+  let defenseTypeImmunities = typeWeaknesses[defenseType].immuneTo;
+
+  if (defenseTypeImmunities.includes(attackType)) {
+    return 0;
+  }
+
+  for (let i = 0; i < attackTypeWeaknesses.length; i++) {
+    if (defenseTypeResistances.includes(attackTypeWeaknesses[i])) {
+      effectiveness *= 0.5;
+    } else if (defenseType === attackTypeWeaknesses[i]) {
+      effectiveness *= 2;
+    }
+  }
+  return effectiveness;
+}
 
 function DamageCalculator() {
   const [pokemonName, setPokemonName] = useState("");
-  const [searched,setSearched] = useState(true)
-  const [oppPokemonName, setOppPokemonName] = useState('')
-  const [searchedOpp,setSearchedOpp] = useState(true)
-  rrows = rows.slice(895)
+  const [searched, setSearched] = useState(true);
+  const [oppPokemonName, setOppPokemonName] = useState("");
+  const [searchedOpp, setSearchedOpp] = useState(true);
+  rrows = rows.slice(895);
   // console.log(rrows);
   useEffect(() => {
-    console.log(rrows)
+    console.log(rrows);
   }, []);
   return (
     <div className="h-[90%] w-full flex">
@@ -81,17 +204,32 @@ function DamageCalculator() {
             </div>)
             })} */}
           <div className="flex">
-            Pokemon Name:  
-            <div className='flex flex-col'>
-                <input className="border-black border-2 ml-2 w-3/4" value={pokemonName} onClick={()=>setSearched(!searched)} onChange={(e) => setPokemonName(e.target.value)}></input>
-                {
-                    pokemonName.length>0 && (!searched) &&
-                    <div className="border-black border mt-2 ml-2 w-3/4">
-                    {
-                      rrows.map(row => row[2].includes(pokemonName) && <div className="cursor-pointer hover:bg-blue-400" onClick={() => { setPokemonName(row[2]); setSearched(true)}}>{row[2]}</div>)                  
-                        }
-                    </div>          
-                }        
+            Pokemon Name:
+            <div className="flex flex-col">
+              <input
+                className="border-black border-2 ml-2 w-3/4"
+                value={pokemonName}
+                onClick={() => setSearched(!searched)}
+                onChange={(e) => setPokemonName(e.target.value)}
+              ></input>
+              {pokemonName.length > 0 && !searched && (
+                <div className="border-black border mt-2 ml-2 w-3/4">
+                  {rrows.map(
+                    (row) =>
+                      row[2].includes(pokemonName) && (
+                        <div
+                          className="cursor-pointer hover:bg-blue-400"
+                          onClick={() => {
+                            setPokemonName(row[2]);
+                            setSearched(true);
+                          }}
+                        >
+                          {row[2]}
+                        </div>
+                      )
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div>
@@ -149,20 +287,35 @@ function DamageCalculator() {
             </label>
           </div>
           <div className="flex">
-                Opponent Pokemon Name:
+            Opponent Pokemon Name:
             <div className="flex flex-col">
-                <input className="border-black border-2 ml-2 w-3/4" value={oppPokemonName} onClick={()=>setSearchedOpp(!searchedOpp)} onChange={(e) => setOppPokemonName(e.target.value)}></input>
-                {
-                    oppPokemonName.length>0 && (!searchedOpp) &&
-                    <div className="border-black border mt-2 ml-2 w-3/4">
-                        {
-                        rrows.map(row => row[2].includes(oppPokemonName) && <div className="cursor-pointer hover:bg-blue-400" onClick={() => { setOppPokemonName(row[2]); setSearchedOpp(true)}}>{row[2]}</div>)                  
-                        }
-                    </div>          
-                }        
+              <input
+                className="border-black border-2 ml-2 w-3/4"
+                value={oppPokemonName}
+                onClick={() => setSearchedOpp(!searchedOpp)}
+                onChange={(e) => setOppPokemonName(e.target.value)}
+              ></input>
+              {oppPokemonName.length > 0 && !searchedOpp && (
+                <div className="border-black border mt-2 ml-2 w-3/4">
+                  {rrows.map(
+                    (row) =>
+                      row[2].includes(oppPokemonName) && (
+                        <div
+                          className="cursor-pointer hover:bg-blue-400"
+                          onClick={() => {
+                            setOppPokemonName(row[2]);
+                            setSearchedOpp(true);
+                          }}
+                        >
+                          {row[2]}
+                        </div>
+                      )
+                  )}
+                </div>
+              )}
             </div>
           </div>
-            <div>
+          <div>
             <label for="pname">
               Opponent Pokemon Type:
               <select
